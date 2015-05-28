@@ -20,6 +20,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+	
+	"github.com/goamz/goamz/s3"
 )
 
 const debug = false
@@ -594,6 +596,9 @@ func (objr objectResource) put(a *action) interface{} {
 	obj.checksum = gotHash
 	obj.mtime = time.Now()
 	objr.bucket.objects[objr.name] = obj
+	
+	h := a.w.Header()
+	h.Set("ETag", fmt.Sprintf("\"%s\"", hex.EncodeToString(obj.checksum)))
 	return nil
 }
 
