@@ -598,7 +598,7 @@ func (objr objectResource) put(a *action) interface{} {
 	objr.bucket.objects[objr.name] = obj
 	
 	h := a.w.Header()
-	h.Set("ETag", fmt.Sprintf("\"%s\"", hex.EncodeToString(obj.checksum)))
+	h.Set("ETag", fmt.Sprintf(`"%s"`, hex.EncodeToString(obj.checksum)))
 	return nil
 }
 
